@@ -53,12 +53,18 @@ public class NavigationDrawerFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onDrawerOpened(View drawerView) {
+                if(!mUserLearnedDrawer){
+                    mUserLearnedDrawer = true;
+                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer+"");
+                }
                 super.onDrawerOpened(drawerView);
+                getActivity().invalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+                getActivity().invalidateOptionsMenu();
             }
         };
 
