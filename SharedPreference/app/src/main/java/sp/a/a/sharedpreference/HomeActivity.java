@@ -3,8 +3,10 @@ package sp.a.a.sharedpreference;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class HomeActivity extends ActionBarActivity {
+
+    RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +48,33 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
+        //RecyclerView Implementation
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_id);
+        CustomAdapter adapter = new CustomAdapter(this, getData());
+        recyclerView.setHorizontalScrollBarEnabled(true);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+//        GridView gridView = (GridView) findViewById(R.id.gridView);
+//        GridAdapter adapter = new GridAdapter(HomeActivity.this);
+//        gridView.setAdapter(adapter);
+
     }
 
+    public static List<Information> getData(){
+        List<Information> data = new ArrayList<>();
+        int[] icons = {R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher,
+                R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher};
+        String[] title = {"a", "b", "c", "d", "a", "b", "c", "d", "a", "b", "c", "d"};
+
+        for(int i = 0; i<icons.length && i<title.length ; i++){
+            Information information = new Information();
+            information.iconId = icons[i];
+            information.title = title[i];
+            data.add(information);
+        }
+        return data;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
