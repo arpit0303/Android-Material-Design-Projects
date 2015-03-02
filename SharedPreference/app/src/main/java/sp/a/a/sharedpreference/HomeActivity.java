@@ -51,13 +51,9 @@ public class HomeActivity extends ActionBarActivity {
         //RecyclerView Implementation
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_id);
         CustomAdapter adapter = new CustomAdapter(this, getData());
-        recyclerView.setHorizontalScrollBarEnabled(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-//        GridView gridView = (GridView) findViewById(R.id.gridView);
-//        GridAdapter adapter = new GridAdapter(HomeActivity.this);
-//        gridView.setAdapter(adapter);
 
     }
 
