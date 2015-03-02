@@ -60,7 +60,7 @@ public class Submit extends ActionBarActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             mYear = year;
-            mMonth = monthOfYear;
+            mMonth = monthOfYear + 1;
             mDay = dayOfMonth;
             mDate.setText(mDay + "/" + mMonth + "/" + mYear);
         }
@@ -71,6 +71,7 @@ public class Submit extends ActionBarActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             mHour = hourOfDay;
             mMinute = minute;
+
             if (mHour >= 12) {
                 mTimeZone = "PM";
                 if (mHour > 12) {
@@ -80,7 +81,13 @@ public class Submit extends ActionBarActivity {
                 mTimeZone = "AM";
             }
 
-            mTime.setText(mHour + ":" + mMinute + " " + mTimeZone);
+            if(mMinute < 10){
+                mTime.setText(mHour + ":0" + mMinute + " " + mTimeZone);
+            }
+            else{
+                mTime.setText(mHour + ":" + mMinute + " " + mTimeZone);
+            }
+
         }
 
 
