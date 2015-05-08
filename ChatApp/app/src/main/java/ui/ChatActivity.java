@@ -11,10 +11,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SendCallback;
 
 import a.a.chatapp.ParseConstants;
 import a.a.chatapp.R;
@@ -27,6 +29,7 @@ public class ChatActivity extends ActionBarActivity {
     EditText sendMessage;
     ImageButton sendButton;
     String channelName;
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,9 @@ public class ChatActivity extends ActionBarActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String message = sendMessage.getText().toString().trim();
+                message = sendMessage.getText().toString().trim();
+
+                sendButton.setEnabled(false);
 
                 if (!(message.isEmpty())) {
                     String pushChannel = userObjectId + "_"+ ParseUser.getCurrentUser().getObjectId();
@@ -64,7 +69,13 @@ public class ChatActivity extends ActionBarActivity {
                     ParsePush push = new ParsePush();
                     push.setQuery(query);
                     push.setMessage(message);
-                    push.sendInBackground();
+                    sendMessage.setText("");
+                    push.sendInBackground(new SendCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            sendButton.setEnabled(true);
+                        }
+                    });
                 }
                 else {
                     //error
@@ -75,6 +86,7 @@ public class ChatActivity extends ActionBarActivity {
 
                     AlertDialog dialog = builder.create();
                     dialog.show();
+                    sendButton.setEnabled(true);
                 }
             }
         });

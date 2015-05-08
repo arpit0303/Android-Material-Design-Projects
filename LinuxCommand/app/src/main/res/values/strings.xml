@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Arduino</string>
+    <string name="app_name">Linux Command</string>
+    <string name="title_activity_main">Linux Termial</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_led_on_off">Arduino</string>
 </resources>

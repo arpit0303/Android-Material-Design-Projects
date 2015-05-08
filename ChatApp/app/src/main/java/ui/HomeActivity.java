@@ -53,10 +53,9 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
-        if(ParseUser.getCurrentUser() == null) {
+        if (ParseUser.getCurrentUser() == null) {
             navigateToLogin();
-        }
-        else {
+        } else {
             getGroupDetails();
         }
 
@@ -72,12 +71,13 @@ public class HomeActivity extends ActionBarActivity {
 
     private void getGroupDetails() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereNotEqualTo(ParseConstants.KEY_OBJECT_ID, ParseUser.getCurrentUser().getObjectId());
 
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> users, ParseException e) {
 
-                if(swipeRefreshLayout.isRefreshing()){
+                if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
                 if (e == null) {
@@ -85,10 +85,8 @@ public class HomeActivity extends ActionBarActivity {
                     parseUsers = users;
                     mParseUsers = new ArrayList<String>();
 
-                    int i = 0;
-                    for (ParseUser user: users){
+                    for (ParseUser user : users) {
                         mParseUsers.add(user.getUsername().toUpperCase());
-                        i++;
                     }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(HomeActivity.this,
@@ -100,7 +98,7 @@ public class HomeActivity extends ActionBarActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
                             intent.putExtra(ParseConstants.KEY_USER_NAME, parseUsers.get(position).getUsername());
-                            intent.putExtra(ParseConstants.KEY_USER_OBJECT_ID,parseUsers.get(position).getObjectId());
+                            intent.putExtra(ParseConstants.KEY_USER_OBJECT_ID, parseUsers.get(position).getObjectId());
                             startActivity(intent);
                         }
                     });

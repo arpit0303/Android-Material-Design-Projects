@@ -8,4 +8,6 @@ public class ParseConstants {
     public static final String KEY_USER_OBJECT_ID = "userObjectId";
     public static final String KEY_USER_NAME = "userName";
 
+    public static final String KEY_OBJECT_ID = "objectId";
+
 }
